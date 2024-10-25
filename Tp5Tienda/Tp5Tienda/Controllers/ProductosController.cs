@@ -9,9 +9,9 @@ namespace Tp5Tienda.Controllers
 
         private readonly ProductosRepositorio _productosRepo;
 
-        public ProductosController()
+        public ProductosController(ProductosRepositorio productosRepositorio)
         {
-            _productosRepo = new ProductosRepositorio();
+            _productosRepo = productosRepositorio;
         }
 
         [HttpGet("CantidadPorEstado")]
