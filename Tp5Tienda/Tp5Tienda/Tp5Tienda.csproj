@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Tienda.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Tienda.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.12" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
