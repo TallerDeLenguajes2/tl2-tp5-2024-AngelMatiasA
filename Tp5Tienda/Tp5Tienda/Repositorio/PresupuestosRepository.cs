@@ -21,7 +21,7 @@ namespace Tp5Tienda.Repositorio
                     {
                         Presupuestos presupuesto = new Presupuestos();
                         presupuesto.IdPresupuesto = Convert.ToInt32(reader["Idpresupuesto"]);
-                        presupuesto.NombreDestinatario = reader["Descripcion"].ToString();
+                        presupuesto.NombreDestinatario = reader["NombreDestinatario"].ToString();
                         presupuesto.FechaCreacion = Convert.ToDateTime(reader["FechaCreacion"]);
                         presupuestos.Add(presupuesto);
                     }
