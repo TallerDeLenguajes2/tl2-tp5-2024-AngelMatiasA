@@ -66,5 +66,20 @@ namespace Tp5Tienda.Controllers
                 return BadRequest("El Producto recibido no es valido");
             }
         }
+
+        [HttpDelete("Eliminar{Id}")]
+        public ActionResult<string> EliminarProducto(int Id)
+        {
+            var resultado = _productosRepo.EliminarProducto(Id);
+            if (resultado)
+            {
+                return Ok("Producto eliminado correctamente");
+            }
+            else
+            {
+                return BadRequest("No se pudo eliminar el producto de la Base de Datos");
+            }
+        }
+
     }
 }

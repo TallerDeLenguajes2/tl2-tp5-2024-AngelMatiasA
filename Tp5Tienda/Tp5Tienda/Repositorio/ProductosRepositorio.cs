@@ -91,6 +91,22 @@ namespace Tp5Tienda.Repositorio
             return nuevoProducto;
         }
 
+        public bool EliminarProducto(int idProd)
+        {
+            int rowAffected = 0;
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string queryString = @"DELETE FROM Productos WHERE idProducto = @idProd;";
+                var command = new SQLiteCommand(queryString, connection);
+                command.Parameters.Add(new SQLiteParameter("@idProd", idProd));
+                rowAffected = command.ExecuteNonQuery();
+                connection.Close();
+            }
+            return rowAffected > 0;
+        }
+
+
 
     }
 }
