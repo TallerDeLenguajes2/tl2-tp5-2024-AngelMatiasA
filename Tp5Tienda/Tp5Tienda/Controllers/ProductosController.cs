@@ -14,7 +14,7 @@ namespace Tp5Tienda.Controllers
             _productosRepo = productosRepositorio;
         }
 
-        [HttpGet("CantidadPorEstado")]
+        [HttpGet("ListarProd")]
         public ActionResult<List<Productos>> MostrarProductos()
         {
             var productos = _productosRepo.MostrarProductos();
@@ -27,6 +27,26 @@ namespace Tp5Tienda.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+
+        [HttpPost("Crear")]
+        public ActionResult<string> CrearTablero(PostProducto nuevoProd)
+        {
+
+            if (nuevoProd != null)
+            {
+                var producto = _productosRepo.CrearProductos(nuevoProd);
+                if (producto == null)
+                {
+                    return BadRequest("No se pudo Guardar en la Base de Datos");
+                }
+                return Ok("Se creo correctamente.");
+            }
+            else
+            {
+                return BadRequest("El Tablero recibido no es valido");
+            }
         }
     }
 }

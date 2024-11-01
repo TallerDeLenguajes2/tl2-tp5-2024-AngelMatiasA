@@ -47,7 +47,7 @@ namespace Tp5Tienda.Repositorio
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                string queryString = @"INSERT INTO Productos VALUES (@Descripcion, @Precio);";
+                string queryString = @"INSERT INTO Productos (Descripcion, Precio) VALUES (@Descripcion, @Precio);";
                 var command = new SQLiteCommand(queryString, connection);
                 command.Parameters.Add(new SQLiteParameter("@Descripcion", nuevoProducto.Descripcion));
                 command.Parameters.Add(new SQLiteParameter("@Precio", nuevoProducto.Precio));
