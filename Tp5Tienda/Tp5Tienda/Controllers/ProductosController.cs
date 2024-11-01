@@ -45,7 +45,25 @@ namespace Tp5Tienda.Controllers
             }
             else
             {
-                return BadRequest("El Tablero recibido no es valido");
+                return BadRequest("El Producto recibido no es valido");
+            }
+        } 
+        [HttpPut("Modificar{Id}")]
+        public ActionResult<string> ModificarTablero(int idProducto, PostProducto nuevoProd)
+        {
+
+            if (nuevoProd != null)
+            {
+                var producto = _productosRepo.ModificarProductos(idProducto, nuevoProd);
+                if (producto == null)
+                {
+                    return BadRequest("No se pudo Guardar en la Base de Datos");
+                }
+                return Ok(producto.ToString());
+            }
+            else
+            {
+                return BadRequest("El Producto recibido no es valido");
             }
         }
     }
