@@ -36,6 +36,33 @@ namespace Tp5Tienda.Repositorio
 
             return productos;
         }
+        
+        public PostProducto CrearProductos( PostProducto nuevoProducto)
+        {
+            int rowAffected = 0;
+            if (nuevoProducto == null)
+            {
+                return null;
+            }
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string queryString = @"INSERT INTO Productos VALUES (@Descripcion, @Precio);";
+                var command = new SQLiteCommand(queryString, connection);
+                command.Parameters.Add(new SQLiteParameter("@Descripcion", nuevoProducto.Descripcion));
+                command.Parameters.Add(new SQLiteParameter("@Precio", nuevoProducto.Precio));
+                rowAffected = command.ExecuteNonQuery();
+                connection.Close();
+               
+            }
+
+            if (rowAffected == 0)
+            {
+                return null;
+            }
+
+            return nuevoProducto;
+        }
 
 
     }

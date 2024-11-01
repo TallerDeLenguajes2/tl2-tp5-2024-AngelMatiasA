@@ -18,7 +18,7 @@ namespace Tp5Tienda.Controllers
         }
 
         [HttpGet("ListarPresupuestos")]
-        public ActionResult<List<Presupuestos>> MostrarPresupuesto()
+        public ActionResult<List<Presupuestos>> ListarPresupuestos()
         {
             var presupuesto = _presupuestoRepo.MostrarPresupuestos();
             if (presupuesto == null )
