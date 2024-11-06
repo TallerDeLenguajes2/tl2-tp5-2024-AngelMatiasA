@@ -37,6 +37,82 @@ namespace Tp5Tienda.Repositorio
             return presupuestos;
         }
 
+        public List<Presupuestos> MostrarPresupuestosConMontos()
+        {
+            Presupuestos presupuesto = null;
+            List<Presupuestos> presupuestos = new List<Presupuestos>();
+
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string queryString = @"SELECT 
+                                P.idPresupuesto, 
+                                P.NombreDestinatario, 
+                                P.FechaCreacion, 
+                                PR.idProducto, 
+                                PR.Descripcion AS Producto, 
+                                PR.Precio, 
+                                PD.Cantidad 
+                              FROM 
+                                Presupuestos P
+                              JOIN 
+                                PresupuestosDetalle PD ON P.idPresupuesto = PD.idPresupuesto
+                              JOIN 
+                                Productos PR ON PD.idProducto = PR.idProducto;";
+                var command = new SQLiteCommand(queryString, connection);
+                int currentId = -1;
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+
+                        currentId = Convert.ToInt32(reader["idPresupuesto"]);
+                        if (presupuesto == null || presupuesto.IdPresupuesto != currentId)
+                        {
+                            if (presupuesto != null)
+                            {
+                                presupuestos.Add(presupuesto);
+
+                            }
+                            presupuesto = new Presupuestos
+                            {
+                                IdPresupuesto = currentId,
+                                NombreDestinatario = reader["NombreDestinatario"].ToString(),
+                                FechaCreacion = Convert.ToDateTime(reader["FechaCreacion"]),
+                                Detalle = new List<PresupuestoDetalle>()
+                            };
+                        }
+
+                        var detalle = new PresupuestoDetalle
+                        {
+                            IdPresupuesto = presupuesto.IdPresupuesto,
+                            Producto = new Productos
+                            {
+                                IdProducto = Convert.ToInt32(reader["idProducto"]),
+                                Descripcion = reader["Producto"].ToString(),
+                                Precio = Convert.ToInt32(reader["Precio"])
+                            },
+                            Cantidad = Convert.ToInt32(reader["Cantidad"])
+                        };
+
+                        presupuesto.Detalle.Add(detalle);
+                    }
+                    if (presupuesto != null)
+                    {
+                        presupuestos.Add(presupuesto);
+                        
+                    }
+                }
+                connection.Close();
+            }
+
+            return presupuestos;
+        }
+
+
+
+
 
         public Presupuestos ObtenerPresupuestoPorId(int idPresupuesto)
         {

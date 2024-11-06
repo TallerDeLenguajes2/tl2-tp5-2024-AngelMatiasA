@@ -28,7 +28,16 @@ namespace Tp5Tienda.Controllers
             return Ok(presupuesto);
         }
         
-      
+        [HttpGet("ListarPresup")]
+        public ActionResult<List<Presupuestos>> ListarPresupues()
+        {
+            var presupuesto = _presupuestoRepo.MostrarPresupuestosConMontos();
+            if (presupuesto == null)
+            {
+                return BadRequest("No hay presupuesto");
+            }
+            return Ok(presupuesto);
+        }
 
         [HttpGet("ObtenerPresupuesto/{Id}")]
         public ActionResult<List<Presupuestos>> ObtenerPresupuesto(int idPres)
