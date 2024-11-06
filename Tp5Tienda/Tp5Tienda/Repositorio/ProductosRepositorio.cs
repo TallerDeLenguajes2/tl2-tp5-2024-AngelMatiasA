@@ -10,9 +10,10 @@ namespace Tp5Tienda.Repositorio
         public List<Productos> MostrarProductos()
         {
             List<Productos> productos = new List<Productos>();
-            using (var connection = new SQLiteConnection(connectionString))
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
+
                 string queryString = @"SELECT * FROM Productos;";
                 var command = new SQLiteCommand(queryString, connection);
                 using (var reader = command.ExecuteReader())
@@ -74,10 +75,14 @@ namespace Tp5Tienda.Repositorio
             {
                 connection.Open();
                 string queryString = @"UPDATE Productos SET Descripcion = @Descripcion, Precio = @Precio WHERE idProducto = @idProducto;";
+
                 var command = new SQLiteCommand(queryString, connection);
+
                 command.Parameters.Add(new SQLiteParameter("@Descripcion", nuevoProducto.Descripcion));
                 command.Parameters.Add(new SQLiteParameter("@Precio", nuevoProducto.Precio));
                 command.Parameters.Add(new SQLiteParameter("@idProducto", idProducto));
+
+
                 rowAffected = command.ExecuteNonQuery();
                 connection.Close();
                

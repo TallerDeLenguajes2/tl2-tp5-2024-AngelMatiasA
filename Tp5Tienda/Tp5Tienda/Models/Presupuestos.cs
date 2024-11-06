@@ -9,7 +9,8 @@
 
         public double MontoPresupuesto()
         {
-            double montoTotal = 0, monto ;
+            double montoTotal = 0;
+            double monto ;
             foreach (var det in Detalle)
             {
                 monto = 0;

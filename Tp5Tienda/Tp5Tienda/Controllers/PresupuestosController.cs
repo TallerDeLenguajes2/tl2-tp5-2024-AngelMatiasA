@@ -21,11 +21,27 @@ namespace Tp5Tienda.Controllers
         public ActionResult<List<Presupuestos>> ListarPresupuestos()
         {
             var presupuesto = _presupuestoRepo.MostrarPresupuestos();
-            if (presupuesto == null )
+            if (presupuesto == null)
             {
                 return BadRequest("No hay presupuesto");
             }
             return Ok(presupuesto);
         }
+        
+      
+
+        [HttpGet("ObtenerPresupuesto/{Id}")]
+        public ActionResult<List<Presupuestos>> ObtenerPresupuesto(int idPres)
+        {
+            var presupuesto = _presupuestoRepo.ObtenerPresupuestoPorId( idPres);
+            if (presupuesto == null)
+            {
+                return BadRequest("No se encontro el presupuesto");
+            }
+            return Ok(presupuesto);
+        }
+
+
+
     }
 }
