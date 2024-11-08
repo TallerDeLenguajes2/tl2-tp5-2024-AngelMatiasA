@@ -94,6 +94,25 @@ namespace Tp5Tienda.Controllers
             }
         }
 
+        [HttpPost("AgregarDetalle")]
+        public ActionResult<string> AgregarDetalle(PresupuestoDetalle nuevoDetalle, int idPresupuesto)
+        {
+
+            if (nuevoDetalle != null)
+            {
+                var producto = _presupuestoRepo.AgregarDetalle(nuevoDetalle, idPresupuesto);
+                if (producto == null)
+                {
+                    return BadRequest("No se pudo Guardar en la Base de Datos");
+                }
+                return Ok("Se creo correctamente.");
+            }
+            else
+            {
+                return BadRequest("El Producto recibido no es valido");
+            }
+        }
+
         [HttpGet("ObtenerPresupuesto/{Id}")]
         public ActionResult<List<Presupuestos>> ObtenerPresupuesto(int idPres)
         {

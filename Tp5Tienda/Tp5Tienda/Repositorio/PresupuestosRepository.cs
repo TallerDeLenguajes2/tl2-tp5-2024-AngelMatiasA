@@ -150,6 +150,37 @@ namespace Tp5Tienda.Repositorio
         }
 
 
+        public PresupuestoDetalle AgregarDetalle(PresupuestoDetalle nuevoDetalle, int idPresupuesto)
+        {
+            int rowAffected = 0;
+            if (nuevoDetalle == null)
+            {
+                return null;
+            }
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string queryString = @"INSERT INTO PresupuestosDetalle (idPresupuesto, idProducto, Cantidad) VALUES (@idPre, @idProd, @cantid);";
+                var command = new SQLiteCommand(queryString, connection);
+                command.Parameters.Add(new SQLiteParameter("@idPre", idPresupuesto));
+                command.Parameters.Add(new SQLiteParameter("@idProd", nuevoDetalle.Producto.IdProducto));
+                command.Parameters.Add(new SQLiteParameter("@cantid", nuevoDetalle.Cantidad));
+                rowAffected = command.ExecuteNonQuery();
+                connection.Close();
+
+
+            }
+
+            if (rowAffected == 0)
+            {
+                return null;
+            }
+
+            return nuevoDetalle;
+        }
+
+
+
 
 
 
