@@ -31,7 +31,7 @@ namespace Tp5Tienda.Controllers
 
 
         [HttpPost("Crear")]
-        public ActionResult<string> CrearTablero(PostProducto nuevoProd)
+        public ActionResult<string> CrearProducto(PostProducto nuevoProd)
         {
 
             if (nuevoProd != null)
@@ -48,6 +48,7 @@ namespace Tp5Tienda.Controllers
                 return BadRequest("El Producto recibido no es valido");
             }
         } 
+
         [HttpPut("Modificar{Id}")]
         public ActionResult<string> ModificarTablero(int idProducto, PostProducto nuevoProd)
         {

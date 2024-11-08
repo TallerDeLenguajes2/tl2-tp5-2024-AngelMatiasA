@@ -28,7 +28,7 @@ namespace Tp5Tienda.Controllers
             return Ok(presupuesto);
         }
 
-        [HttpGet("ListarPresup")]
+       /* [HttpGet("ListarPresup")]
         public ActionResult<List<Presupuestos>> ListarPresupues()
         {
             var presupuesto = _presupuestoRepo.MostrarPresupuestosConMontos();
@@ -37,17 +37,17 @@ namespace Tp5Tienda.Controllers
                 return BadRequest("No hay presupuesto");
             }
             return Ok(presupuesto);
-        }
+        }*/
 
         [HttpGet("ListarPresupuestoConDetalle")]
         public ActionResult<List<PresupuestoViewModel>> ListarPresupuestosConDetalle()
         {
-            List<PresupuestoViewModel> presupViewModel = new List<PresupuestoViewModel>();
+            List<PresupuestoViewModel> presupuestosVM = new List<PresupuestoViewModel>();
             var presupuestos = _presupuestoRepo.MostrarPresupuestosConMontos();
 
             foreach (var presupuest in presupuestos)
             {
-                PresupuestoViewModel presupuesto = new PresupuestoViewModel
+                PresupuestoViewModel presupuestoVM = new PresupuestoViewModel
                 {
                     IdPresupuesto = presupuest.IdPresupuesto,
                     NombreDestinatario = presupuest.NombreDestinatario,
@@ -57,14 +57,14 @@ namespace Tp5Tienda.Controllers
 
 
                 };
-                presupuesto.Detalles = new List<PresupuestoDetalle>();
+                presupuestoVM.Detalles = new List<PresupuestoDetalle>();
                 foreach (var detail in presupuest.Detalle)
                 {
-                    presupuesto.Detalles.Add(detail);
+                    presupuestoVM.Detalles.Add(detail);
                         
 
                 };
-                presupViewModel.Add(presupuesto);
+                presupuestosVM.Add(presupuestoVM);
                 
             }
 
@@ -72,7 +72,26 @@ namespace Tp5Tienda.Controllers
             {
                 return BadRequest("No hay presupuesto");
             }
-            return Ok(presupViewModel);
+            return Ok(presupuestosVM);
+        }
+
+        [HttpPost("Crear")]
+        public ActionResult<string> CrearPresupuesto(Presupuestos nuevoPresup)
+        {
+
+            if (nuevoPresup != null)
+            {
+                var producto = _presupuestoRepo.CrearPresupuesto(nuevoPresup);
+                if (producto == null)
+                {
+                    return BadRequest("No se pudo Guardar en la Base de Datos");
+                }
+                return Ok("Se creo correctamente.");
+            }
+            else
+            {
+                return BadRequest("El Producto recibido no es valido");
+            }
         }
 
         [HttpGet("ObtenerPresupuesto/{Id}")]

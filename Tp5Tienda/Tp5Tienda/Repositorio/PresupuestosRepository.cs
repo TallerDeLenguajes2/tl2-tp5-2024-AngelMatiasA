@@ -121,6 +121,34 @@ namespace Tp5Tienda.Repositorio
             return presupuestos;
         }
 
+        public Presupuestos CrearPresupuesto(Presupuestos nuevoPresup)
+        {
+            int rowAffected = 0;
+            if (nuevoPresup == null)
+            {
+                return null;
+            }
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string queryString = @"INSERT INTO Presupuestos (NombreDestinatario, FechaCreacion) VALUES (@nombreDest, @fechaCreac);";
+                var command = new SQLiteCommand(queryString, connection);
+                command.Parameters.Add(new SQLiteParameter("@nombreDest", nuevoPresup.NombreDestinatario));
+                command.Parameters.Add(new SQLiteParameter("@fechaCreac", DateTime.Now));
+                rowAffected = command.ExecuteNonQuery();
+                connection.Close();
+
+
+            }
+
+            if (rowAffected == 0)
+            {
+                return null;
+            }
+
+            return nuevoPresup;
+        }
+
 
 
 
