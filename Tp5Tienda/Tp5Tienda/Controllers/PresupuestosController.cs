@@ -27,7 +27,7 @@ namespace Tp5Tienda.Controllers
             }
             return Ok(presupuesto);
         }
-        
+
         [HttpGet("ListarPresup")]
         public ActionResult<List<Presupuestos>> ListarPresupues()
         {
@@ -37,6 +37,42 @@ namespace Tp5Tienda.Controllers
                 return BadRequest("No hay presupuesto");
             }
             return Ok(presupuesto);
+        }
+
+        [HttpGet("ListarPresupuestoConDetalle")]
+        public ActionResult<List<PresupuestoViewModel>> ListarPresupuestosConDetalle()
+        {
+            List<PresupuestoViewModel> presupViewModel = new List<PresupuestoViewModel>();
+            var presupuestos = _presupuestoRepo.MostrarPresupuestosConMontos();
+
+            foreach (var presupuest in presupuestos)
+            {
+                PresupuestoViewModel presupuesto = new PresupuestoViewModel
+                {
+                    IdPresupuesto = presupuest.IdPresupuesto,
+                    NombreDestinatario = presupuest.NombreDestinatario,
+                    FechaCreacion = presupuest.FechaCreacion,
+                    SubTotal = presupuest.MontoPresupuesto(),
+                    Total = presupuest.MontoPresupuestoConIva()
+
+
+                };
+                presupuesto.Detalles = new List<PresupuestoDetalle>();
+                foreach (var detail in presupuest.Detalle)
+                {
+                    presupuesto.Detalles.Add(detail);
+                        
+
+                };
+                presupViewModel.Add(presupuesto);
+                
+            }
+
+            if (presupuestos == null)
+            {
+                return BadRequest("No hay presupuesto");
+            }
+            return Ok(presupViewModel);
         }
 
         [HttpGet("ObtenerPresupuesto/{Id}")]
