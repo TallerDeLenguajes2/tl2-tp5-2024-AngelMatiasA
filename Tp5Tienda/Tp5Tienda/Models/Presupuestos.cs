@@ -10,13 +10,9 @@
         public double MontoPresupuesto()
         {
             double montoTotal = 0;
-            double monto ;
             foreach (var det in Detalle)
             {
-                monto = 0;
-                monto += Convert.ToDouble(det.Producto.Precio);
-                monto = monto * det.Cantidad;
-                montoTotal += monto;
+                montoTotal += Convert.ToDouble(det.Producto.Precio) * det.Cantidad;
             }
             return montoTotal;
 

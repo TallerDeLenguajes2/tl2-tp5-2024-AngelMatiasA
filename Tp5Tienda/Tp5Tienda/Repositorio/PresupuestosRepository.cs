@@ -72,6 +72,12 @@ namespace Tp5Tienda.Repositorio
                         {
                             if (presupuesto != null)
                             {
+                                double precioPresupuesto = presupuesto.MontoPresupuesto();
+                                Console.WriteLine($"El precio total del presupuesto de id nro {currentId} es: {precioPresupuesto}");
+
+                                double precioPresupuestoConIva = presupuesto.MontoPresupuestoConIva();
+                                Console.WriteLine($"El precio total del presupuesto es: {precioPresupuestoConIva}");
+
                                 presupuestos.Add(presupuesto);
 
                             }
@@ -100,6 +106,11 @@ namespace Tp5Tienda.Repositorio
                     }
                     if (presupuesto != null)
                     {
+                        double precioPresupuesto = presupuesto.MontoPresupuesto();
+                        Console.WriteLine($"El precio total del presupuesto de id nro {currentId} es: {precioPresupuesto}");
+
+                        double precioPresupuestoConIva = presupuesto.MontoPresupuestoConIva();
+                        Console.WriteLine($"El precio total del presupuesto es: {precioPresupuestoConIva}");
                         presupuestos.Add(presupuesto);
                         
                     }
